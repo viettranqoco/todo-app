@@ -24,7 +24,7 @@ export default function AddTodoForm() {
   const [pending, startTransition] = useTransition();
 
   const form = useForm<CreateTodoRequest>({
-    mode: "onSubmit",
+    mode: "onBlur",
     resolver: zodResolver(createTodoSchema),
     defaultValues: {
       todo: "",

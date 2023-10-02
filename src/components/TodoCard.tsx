@@ -7,7 +7,10 @@ import { format } from "date-fns";
 import { Checkbox } from "./ui/checkbox";
 import { Button } from "./ui/button";
 import { Loader2, Trash } from "lucide-react";
-import { deleteTodoAction } from "@/lib/server-actions";
+import {
+  deleteTodoAction,
+  toggleCompleteTodoAction,
+} from "@/lib/server-actions";
 import toast from "react-hot-toast";
 
 type Props = {
@@ -16,6 +19,17 @@ type Props = {
 
 export default function TodoCard({ todo }: Props) {
   const [pending, startTransition] = useTransition();
+
+  function handleToggleCompleteTodo() {
+    startTransition(async () => {
+      try {
+        await toggleCompleteTodoAction(todo.id, !todo.isDone);
+        toast.success("Update todo success");
+      } catch (error) {
+        toast.error("Something went wrong");
+      }
+    });
+  }
 
   function handleDeleteTodo() {
     startTransition(async () => {
@@ -30,7 +44,15 @@ export default function TodoCard({ todo }: Props) {
 
   return (
     <Card className="flex items-center px-4 py-1">
-      <Checkbox checked={todo.isDone} />
+      {pending ? (
+        <Loader2 className="mr-2 h-5 w-5 animate-spin" />
+      ) : (
+        <Checkbox
+          checked={todo.isDone}
+          onClick={handleToggleCompleteTodo}
+          className="w-5 h-5"
+        />
+      )}
 
       <div className="py-1 px-4 flex-1">
         <p>{todo.todo}</p>

@@ -52,3 +52,22 @@ export async function deleteTodoAction(id: string): Promise<void> {
     console.log(error);
   }
 }
+
+export async function toggleCompleteTodoAction(
+  id: string,
+  isDone: boolean
+): Promise<void> {
+  try {
+    await prisma.todo.update({
+      where: {
+        id,
+      },
+      data: {
+        isDone,
+      },
+    });
+    revalidatePath("/");
+  } catch (error) {
+    console.log(error);
+  }
+}
