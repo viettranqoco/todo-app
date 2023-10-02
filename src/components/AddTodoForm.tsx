@@ -34,7 +34,6 @@ export default function AddTodoForm() {
   async function onSubmit(data: CreateTodoRequest) {
     startTransition(async () => {
       try {
-        console.log("submit", data);
         await createTodoAction(data);
 
         toast.success("Add todo success");

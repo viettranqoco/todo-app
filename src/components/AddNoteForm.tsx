@@ -10,8 +10,8 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { Button, buttonVariants } from "@/components/ui/button";
-import { Loader2, MessageCircle, PlusCircle } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Loader2, MessageCircle } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Separator } from "./ui/separator";
 import {
@@ -27,6 +27,8 @@ import { CreateNoteRequest } from "@/lib/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { createNoteSchema } from "@/lib/schemas";
 import { Input } from "./ui/input";
+import toast from "react-hot-toast";
+import { createNoteAction } from "@/lib/server-actions";
 
 type Props = {
   todoId: string;
@@ -45,16 +47,16 @@ export default function AddNoteForm({ todoId }: Props) {
     },
   });
 
-  function onSubmit(data: CreateNoteRequest) {
+  async function onSubmit(data: CreateNoteRequest) {
     startTransition(async () => {
       try {
-        console.log("submit", data);
-        // await createTodoAction(data);
+        await createNoteAction(data);
 
-        // toast.success("Add todo success");
-        // form.reset();
+        toast.success("Add note success");
+        form.reset();
+        setOpen(false);
       } catch (error) {
-        // toast.error("Something went wrong");
+        toast.error("Something went wrong");
       }
     });
   }
@@ -94,7 +96,7 @@ export default function AddNoteForm({ todoId }: Props) {
               >
                 Cancel
               </Button>
-              <Button variant={"default"} disabled={pending}>
+              <Button variant={"default"} type="submit">
                 {pending && <Loader2 className="mr-2 h-5 w-5 animate-spin" />}
                 Submit
               </Button>

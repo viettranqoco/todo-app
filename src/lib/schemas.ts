@@ -12,5 +12,5 @@ export const createNoteSchema = z.object({
     .string()
     .min(3, "Note text must be at least 3 characters.")
     .max(100, "Note text must be less than 100 characters."),
-  todoId: z.string().uuid(),
+  todoId: z.string().length(24),
 });
