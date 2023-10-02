@@ -7,8 +7,6 @@ import Image from "next/image";
 export default async function Home() {
   const todos = await getTodosAction();
 
-  console.log(todos);
-
   return (
     <main className="max-w-4xl mx-auto shadow min-h-screen p-4">
       <AddTodoForm />
