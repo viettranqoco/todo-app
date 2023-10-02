@@ -12,19 +12,11 @@ import {
   Card,
   CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "./ui/form";
+import { Form, FormControl, FormField, FormItem, FormMessage } from "./ui/form";
 import { createTodoAction } from "@/lib/server-actions";
 import toast from "react-hot-toast";
 
@@ -43,9 +35,7 @@ export default function AddTodoForm() {
     startTransition(async () => {
       try {
         console.log("submit", data);
-        const resCreateTodo = await createTodoAction(data);
-
-        console.log(resCreateTodo);
+        await createTodoAction(data);
 
         toast.success("Add todo success");
         form.reset();

@@ -2,7 +2,7 @@
 
 import { revalidatePath } from "next/cache";
 import { prisma } from "./prisma";
-import { CreateTodoRequest } from "./types";
+import { CreateTodoRequest, TodoResponse } from "./types";
 import { createTodoSchema } from "./schemas";
 
 export async function createTodoAction(data: CreateTodoRequest): Promise<any> {
@@ -19,5 +19,23 @@ export async function createTodoAction(data: CreateTodoRequest): Promise<any> {
     revalidatePath("/");
   } catch (error) {
     console.log(error);
+  }
+}
+
+export async function getTodosAction(): Promise<TodoResponse[]> {
+  try {
+    const todos: TodoResponse[] = await prisma.todo.findMany({
+      orderBy: {
+        createdAt: "desc",
+      },
+      include: {
+        notes: true,
+      },
+    });
+
+    return todos;
+  } catch (error) {
+    console.log(error);
+    return [];
   }
 }
