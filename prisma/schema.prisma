@@ -25,7 +25,7 @@ model Note {
   id        String   @id @default(auto()) @map("_id") @db.ObjectId
   note      String
   todoId    String   @db.ObjectId
-  todo      Todo     @relation(fields: [todoId], references: [id])
+  todo      Todo     @relation(fields: [todoId], references: [id], onDelete: Cascade)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 

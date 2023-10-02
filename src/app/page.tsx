@@ -8,7 +8,7 @@ export default async function Home() {
   const todos = await getTodosAction();
 
   return (
-    <main className="max-w-4xl mx-auto shadow min-h-screen p-4">
+    <main className="max-w-4xl mx-auto min-h-screen p-4">
       <AddTodoForm />
       <TodoList todos={todos} />
     </main>

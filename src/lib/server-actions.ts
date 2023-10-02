@@ -4,7 +4,6 @@ import { revalidatePath } from "next/cache";
 import { prisma } from "./prisma";
 import { CreateNoteRequest, CreateTodoRequest, TodoResponse } from "./types";
 import { createNoteSchema, createTodoSchema } from "./schemas";
-import { ZodError } from "zod";
 
 // TODOS
 export async function createTodoAction(data: CreateTodoRequest): Promise<any> {
@@ -53,6 +52,7 @@ export async function deleteTodoAction(id: string): Promise<void> {
     revalidatePath("/");
   } catch (error) {
     console.log(error);
+    return Promise.reject(error);
   }
 }
 

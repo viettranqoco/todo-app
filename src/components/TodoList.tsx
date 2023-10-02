@@ -1,6 +1,5 @@
 import { TodoResponse } from "@/lib/types";
 import React from "react";
-import { Card, CardContent } from "./ui/card";
 import TodoCard from "./TodoCard";
 
 type Props = {
