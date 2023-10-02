@@ -39,3 +39,16 @@ export async function getTodosAction(): Promise<TodoResponse[]> {
     return [];
   }
 }
+
+export async function deleteTodoAction(id: string): Promise<void> {
+  try {
+    await prisma.todo.delete({
+      where: {
+        id,
+      },
+    });
+    revalidatePath("/");
+  } catch (error) {
+    console.log(error);
+  }
+}
